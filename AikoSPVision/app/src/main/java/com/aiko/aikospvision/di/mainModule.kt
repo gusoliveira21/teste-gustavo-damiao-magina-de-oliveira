@@ -1,6 +1,9 @@
 package com.aiko.aikospvision.di
 
+import com.aiko.data.remote.VisionService
 import com.aiko.data.remote.adapters.internal.NetworkResultCallAdapterFactory
+import com.aiko.data.repository.SPVisionRepositoryImpl
+import com.aiko.domain.repository.SPVisionRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
@@ -11,14 +14,19 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val mainModule = module {
 
+    single<SPVisionRepository> { SPVisionRepositoryImpl(get()) }
+
     single {
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
     }
 
+    single<VisionService> { get<Retrofit>().create(VisionService::class.java) }
+
+
     single {
-        val apiKey = "8df2ebbc7fed5723047bf5505576bc6f3986f9f6e43e1efc0b40086fc4e438c1"
+        val apiKey = "KEY"
 
         val authInterceptor = Interceptor { chain ->
             val original = chain.request()
