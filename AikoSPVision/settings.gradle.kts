@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "AikoSPVision"
 include(":app")
+include(":data")
+include(":domain")
