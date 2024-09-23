@@ -7,11 +7,13 @@ import com.aiko.domain.model.Previsao
 import com.aiko.domain.network.NetworkResult
 
 interface SPVisionRepository {
+    suspend fun postAuth(): NetworkResult<Boolean>
+
+    suspend fun getStopsBySearchTerm(term: String ): NetworkResult<List<Parada>>
+
     suspend fun getLines(): NetworkResult<List<Linha>>
 
     suspend fun getVehiclePosition( lineCode: Int ): NetworkResult<PosicaoVeiculo>
-
-    suspend fun getStopsByLine( lineCode: Int ): NetworkResult<List<Parada>>
 
     suspend fun getForecast( stopCode: Int, lineCode: Int ): NetworkResult<Previsao>
 

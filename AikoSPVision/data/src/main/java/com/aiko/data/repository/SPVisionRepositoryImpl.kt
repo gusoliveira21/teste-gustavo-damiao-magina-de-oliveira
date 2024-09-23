@@ -9,14 +9,20 @@ import com.aiko.domain.network.ErrorBody
 import com.aiko.domain.network.NetworkResult
 import com.aiko.domain.repository.SPVisionRepository
 
-class SPVisionRepositoryImpl(
-    private val visionService: VisionService
-) : SPVisionRepository {
+class SPVisionRepositoryImpl( private val visionService: VisionService) : SPVisionRepository {
+    override suspend fun postAuth(): NetworkResult<Boolean> {
+        return when (val result = visionService.postAuth()) {
+            is NetworkResult.Success -> NetworkResult.Success(result.data)
+            is NetworkResult.Exception -> NetworkResult.Exception(Error("${result.e}"))
+            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody(result.body?.error ?: "UNKNOWN_MESSAGE_ERROR") )
+        }
+    }
+
     override suspend fun getLines(): NetworkResult<List<Linha>> {
         return when (val result = visionService.getLines()) {
             is NetworkResult.Success -> NetworkResult.Success(result.data)
             is NetworkResult.Exception -> NetworkResult.Exception(Error("${result.e}"))
-            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody("UNKNOWN_MESSAGE_ERROR") )
+            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody(result.body?.error ?: "UNKNOWN_MESSAGE_ERROR") )
         }
     }
 
@@ -26,15 +32,15 @@ class SPVisionRepositoryImpl(
         return when (val result = visionService.getVehiclePosition(lineCode)) {
             is NetworkResult.Success -> NetworkResult.Success(result.data)
             is NetworkResult.Exception -> NetworkResult.Exception(Error("${result.e}"))
-            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody("UNKNOWN_MESSAGE_ERROR") )
+            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody(result.body?.error ?: "UNKNOWN_MESSAGE_ERROR") )
         }
     }
 
-    override suspend fun getStopsByLine(lineCode: Int): NetworkResult<List<Parada>> {
-        return when (val result = visionService.getStopsByLine(lineCode)) {
+    override suspend fun getStopsBySearchTerm(term: String): NetworkResult<List<Parada>> {
+        return when (val result = visionService.getStopsBySearchTerm(searchTerm = term)) {
             is NetworkResult.Success -> NetworkResult.Success(result.data)
             is NetworkResult.Exception -> NetworkResult.Exception(Error("${result.e}"))
-            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody("UNKNOWN_MESSAGE_ERROR") )
+            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody(result.body?.error ?: "UNKNOWN_MESSAGE_ERROR") )
         }
     }
 
@@ -45,7 +51,7 @@ class SPVisionRepositoryImpl(
         return when (val result = visionService.getForecast(stopCode = stopCode, lineCode = lineCode)) {
             is NetworkResult.Success -> NetworkResult.Success(result.data)
             is NetworkResult.Exception -> NetworkResult.Exception(Error("${result.e}"))
-            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody("UNKNOWN_MESSAGE_ERROR") )
+            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody(result.body?.error ?: "UNKNOWN_MESSAGE_ERROR") )
         }
     }
 
@@ -55,7 +61,7 @@ class SPVisionRepositoryImpl(
         return when (val result = visionService.searchLines(searchTerms = searchTerms)) {
             is NetworkResult.Success -> NetworkResult.Success(result.data)
             is NetworkResult.Exception -> NetworkResult.Exception(Error("${result.e}"))
-            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody("UNKNOWN_MESSAGE_ERROR") )
+            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody(result.body?.error ?: "UNKNOWN_MESSAGE_ERROR") )
         }
     }
 
