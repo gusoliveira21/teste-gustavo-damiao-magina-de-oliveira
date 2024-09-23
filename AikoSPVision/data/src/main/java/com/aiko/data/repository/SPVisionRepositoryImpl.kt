@@ -26,6 +26,14 @@ class SPVisionRepositoryImpl( private val visionService: VisionService) : SPVisi
         }
     }
 
+    override suspend fun getForecast(stopCode: Long): NetworkResult<Previsao> {
+        return when (val result = visionService.getForecast(stopCode)) {
+            is NetworkResult.Success -> NetworkResult.Success(result.data)
+            is NetworkResult.Exception -> NetworkResult.Exception(Error("${result.e}"))
+            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody(result.body?.error ?: "UNKNOWN_MESSAGE_ERROR") )
+        }
+    }
+
     override suspend fun getVehiclePosition(
         lineCode: Int
     ): NetworkResult<PosicaoVeiculo> {
@@ -38,17 +46,6 @@ class SPVisionRepositoryImpl( private val visionService: VisionService) : SPVisi
 
     override suspend fun getStopsBySearchTerm(term: String): NetworkResult<List<Parada>> {
         return when (val result = visionService.getStopsBySearchTerm(searchTerm = term)) {
-            is NetworkResult.Success -> NetworkResult.Success(result.data)
-            is NetworkResult.Exception -> NetworkResult.Exception(Error("${result.e}"))
-            is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody(result.body?.error ?: "UNKNOWN_MESSAGE_ERROR") )
-        }
-    }
-
-    override suspend fun getForecast(
-        stopCode: Int,
-        lineCode: Int
-    ): NetworkResult<Previsao> {
-        return when (val result = visionService.getForecast(stopCode = stopCode, lineCode = lineCode)) {
             is NetworkResult.Success -> NetworkResult.Success(result.data)
             is NetworkResult.Exception -> NetworkResult.Exception(Error("${result.e}"))
             is NetworkResult.Error -> NetworkResult.Error( code = 0, ErrorBody(result.body?.error ?: "UNKNOWN_MESSAGE_ERROR") )

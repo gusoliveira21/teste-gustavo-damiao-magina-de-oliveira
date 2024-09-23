@@ -19,6 +19,9 @@ interface VisionService {
     @GET("Parada/Buscar")
     suspend fun getStopsBySearchTerm(@Query("termosBusca") searchTerm: String): NetworkResult<List<Parada>>
 
+    @GET("Previsao/Parada")
+    suspend fun getForecast( @Query("codigoParada") stopCode: Long ): NetworkResult<Previsao>
+
 
 
     @GET("vision-api/lines")
@@ -27,11 +30,7 @@ interface VisionService {
     @GET("vision-api/vehicles")
     suspend fun getVehiclePosition(@Query("lineCode") lineCode: Int): NetworkResult<PosicaoVeiculo>
 
-    @GET("vision-api/forecast")
-    suspend fun getForecast(
-        @Query("stopCode") stopCode: Int,
-        @Query("lineCode") lineCode: Int
-    ): NetworkResult<Previsao>
+
 
     @GET("vision-api/search")
     suspend fun searchLines(@Query("searchTerms") searchTerms: String): NetworkResult<List<Linha>>
