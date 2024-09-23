@@ -43,12 +43,15 @@ import com.aiko.aikospvision.ui.componentes.NavigationBar
 import com.aiko.aikospvision.ui.componentes.Scaffold
 import com.aiko.aikospvision.ui.componentes.SearchInputField
 import com.aiko.aikospvision.ui.theme.AikoSPVisionTheme
+import com.aiko.aikospvision.util.paradaAdapter
 import com.aiko.domain.model.Parada
 import com.aiko.domain.usecase.GetStopsBySearchTermUseCase
 import com.aiko.domain.usecase.PostAuthUseCase
 import com.alabia.manager.ui.state.TaskState
 import com.alabia.manager.ui.state.ValidationEvent
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,6 +60,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
+
 //todo: Abstrair
 //  - viewModel
 //  - data class
@@ -113,15 +117,16 @@ class MockViewModelHome() : ViewModelHome() {
 class ViewModelHomeImpl(
     val getStopsBySearchTermUseCase: GetStopsBySearchTermUseCase,
     val postAuthUseCase: PostAuthUseCase,
-) : ViewModelHome()
-{
+) : ViewModelHome() {
     override var _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     override val state = _state.asStateFlow()
 
     private val _taskState: MutableStateFlow<TaskState> = MutableStateFlow(TaskState.Idle)
     override val taskState: StateFlow<TaskState> get() = _taskState
 
-    init { auth() }
+    init {
+        auth()
+    }
 
     override val validationEventChannel = Channel<ValidationEvent>()
 
@@ -176,7 +181,8 @@ class ViewModelHomeImpl(
     }
 }
 
-@Composable private fun getModel(): ViewModelHome {
+@Composable
+private fun getModel(): ViewModelHome {
     return if (LocalInspectionMode.current) {
         MockViewModelHome()
     } else {
@@ -262,10 +268,16 @@ fun ScreenHome(navController: NavController, viewModel: ViewModelHome = getViewM
                                                         ParadaItem(
                                                             nomeParada = "${state.listStopped[it].nomeParada}",
                                                             enderecoParada = "${state.listStopped[it].enderecoParada}\n ${state.listStopped[it].codigoParada}",
-                                                            modifier = Modifier.padding(vertical = 8.dp).background(Color.Red.copy(alpha = 0.1f)),
-                                                            onItemClick = { },
+                                                            modifier = Modifier
+                                                                .padding(vertical = 8.dp)
+                                                                .background(Color.Red.copy(alpha = 0.1f)),
+                                                            onItemClick = {
+                                                                try{
+                                                                    navController.navigate("stops_screen/${state.listStopped[it].codigoParada}")
+                                                                }  catch (e: Exception){
+                                                                    Log.e(TAG, "Exception: $e")
+                                                                }                                                          },
                                                         )
-
                                                     }
                                                 } else {
                                                     item { Row { Text(text = "Sem itens") } }
