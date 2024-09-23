@@ -10,7 +10,7 @@
     <string name="line">Linhas</string>
 
     <!-- Title - MANAGER -->
-    <string name="navigation_title_home">home</string>
+    <string name="navigation_title_home">Home</string>
     <string name="navigation_title_stops">Stops</string>
     <string name="navigation_title_lines">Lines</string>
 
