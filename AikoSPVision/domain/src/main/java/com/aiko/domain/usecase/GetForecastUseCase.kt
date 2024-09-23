@@ -8,12 +8,11 @@ import com.aiko.domain.usecase.base.DataResult
 
 class GetForecastUseCase(
     private val spVisionRepository: SPVisionRepository
-) : BaseUseCase<Pair<Int, Int>, Previsao>() {
+) : BaseUseCase<Long, Previsao>() {
 
-    override suspend fun doWork(params: Pair<Int, Int>): DataResult<Previsao> {
-        val (stopCode, lineCode) = params
+    override suspend fun doWork(stopCode: Long): DataResult<Previsao> {
         return try {
-            val result = spVisionRepository.getForecast(stopCode, lineCode)
+            val result = spVisionRepository.getForecast(stopCode)
             when (result) {
                 is NetworkResult.Success -> DataResult.Success(result.data)
                 is NetworkResult.Error -> DataResult.Failure(Throwable(result.body?.error))

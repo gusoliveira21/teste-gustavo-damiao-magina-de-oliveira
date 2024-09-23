@@ -1,6 +1,22 @@
 package com.aiko.domain.model
 
 import com.squareup.moshi.Json
+import java.util.UUID
+
+data class Parada(
+    val uniqueID: String = UUID.randomUUID().toString(),
+    @Json(name = "cp") val codigoParada: Int?,
+    @Json(name = "np") val nomeParada: String?,
+    @Json(name = "ed") val enderecoParada: String?,
+    @Json(name = "py") val latitude: Double?,
+    @Json(name = "px") val longitude: Double?
+)
+
+data class Previsao(
+    val uniqueID: String = UUID.randomUUID().toString(),
+    @Json(name = "hr") val horarioReferencia: String?,
+    @Json(name = "p") val pontoParada: PontoDeParada?
+)
 
 data class Linha(
     @Json(name = "cl") val codigoLinha: Int?,
@@ -10,19 +26,6 @@ data class Linha(
     @Json(name = "tl") val tipoLinha: Int?,
     @Json(name = "tp") val terminalPrincipal: String?,
     @Json(name = "ts") val terminalSecundario: String?
-)
-
-data class Parada(
-    @Json(name = "cp") val codigoParada: Int?,
-    @Json(name = "np") val nomeParada: String?,
-    @Json(name = "ed") val enderecoParada: String?,
-    @Json(name = "py") val latitude: Double?,
-    @Json(name = "px") val longitude: Double?
-)
-
-data class Previsao(
-    @Json(name = "hr") val horarioReferencia: String?,
-    @Json(name = "p") val pontoParada: PontoDeParada?
 )
 
 data class PontoDeParada(
