@@ -17,7 +17,6 @@ sealed class NavigationBarItems(
     object Home : NavigationBarItems(
         icons = R.drawable.direcction,
         titleResId = R.string.navigation_title_home,
-//        titleResId = R.string.navigation_title_stops,
         routeResId = R.string.navigation_route_home,
         groupResId = R.string.navigation_group_home
     )
