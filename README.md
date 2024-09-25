@@ -12,15 +12,15 @@ Seu objetivo é criar um aplicativo que exiba dados sobre o transporte público 
 
 Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste
 
-- [x] **Paradas**: Exibir os pontos de parada da cidade no mapa.
+- **Paradas**: Exibir os pontos de parada da cidade no mapa.
 
-- [x] **Previsão de chegada**: Dado uma parada informar a previsão de chegada de cada veículo que passe pela parada selecionada.
+- **Previsão de chegada**: Dado uma parada informar a previsão de chegada de cada veículo que passe pela parada selecionada.
   
-- [x] **Posições dos veículos**: Exibir no mapa onde os veículos estavam na sua última atualização.
+- **Posições dos veículos**: Exibir no mapa onde os veículos estavam na sua última atualização.
 
-- [ ] **Linhas**: Exibir informações sobre as linhas de ônibus.
+- **Linhas**: Exibir informações sobre as linhas de ônibus.
 
-- [ ] **Pesquisa e Filtros**: Permitir que o usuário pesquise e filtre esses dados, interagindo com a interface.
+- **Pesquisa e Filtros**: Permitir que o usuário pesquise e filtre esses dados, interagindo com a interface.
 
 ## O que é permitido
 
