@@ -51,7 +51,7 @@ fun ScreenBusLines(
             .statusBarsPadding()
     ) {
         Scaffold(
-            titleTopBar = "HOME",
+            titleTopBar = "Linhas de ônibus".uppercase(),
             navigationUp = navController,
             modifier = Modifier,
             actions = {

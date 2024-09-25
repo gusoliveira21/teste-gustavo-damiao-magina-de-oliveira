@@ -88,20 +88,21 @@ fun ScreenVehiclePosition(
             contentToUse = { paddingValue ->
                 Box(modifier = Modifier.padding(paddingValue)) {
                     Column {
-                        Row(modifier = Modifier.padding(16.dp)) {
+                        Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
                             Text(
                                 text = "Linha: ${state.vehicleLineSense ?: "Desconhecida"}",
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.padding(bottom = 4.dp)
                             )
                         }
-                        Row(modifier = Modifier.padding(16.dp)) {
+                        Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
                             Text(
                                 text = "Origem: ${state.vehicleOrigin ?: "N/A"} ➔ Destino: ${state.vehicleDestination ?: "N/A"}",
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.padding(bottom = 4.dp)
                             )
                         }
-                        Row(modifier = Modifier.padding(16.dp)) {
+                        Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
                             Text(
                                 text = "Letreiro: ${state.vehicleCompleteSign ?: "Desconhecida"}",
                                 style = MaterialTheme.typography.bodyLarge,
@@ -109,12 +110,10 @@ fun ScreenVehiclePosition(
                             )
                         }
                         MapComponent(
-                            listOf(
-                                MapCordinator(
+                            listOf(MapCordinator(
                                     latitude = state.latitude,
                                     longitude = state.longitude,
-                                )
-                            ), navController, onClickIsOn = true)
+                                )), navController, onClickIsOn = false)
                     }
                 }
             }

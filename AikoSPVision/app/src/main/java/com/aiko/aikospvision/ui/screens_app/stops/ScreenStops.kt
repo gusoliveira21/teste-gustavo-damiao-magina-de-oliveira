@@ -19,39 +19,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.twotone.DoubleArrow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.aiko.aikospvision.gmaps.convertPrevisaoToMapCoordinators
 import com.aiko.aikospvision.ui.componentes.NavigationBar
 import com.aiko.aikospvision.ui.componentes.Scaffold
-import com.aiko.aikospvision.ui.theme.AikoSPVisionTheme
-import com.aiko.domain.model.StopModel
-import com.aiko.domain.model.ForecastModel
-import com.aiko.domain.usecase.GetForecastUseCase
-import com.aiko.domain.usecase.PostAuthUseCase
-import com.alabia.manager.ui.state.TaskState
-import com.alabia.manager.ui.state.ValidationEvent
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 
@@ -161,32 +143,45 @@ fun ScreenStops(
                                                 )
                                                 Spacer(modifier = Modifier.height(8.dp))
                                                 linha.veiculos?.forEach { veiculo ->
-                                                    Column(
+                                                    Row(
                                                         modifier = Modifier
                                                             .fillMaxWidth()
                                                             .padding(vertical = 4.dp)
                                                             .clickable {
-                                                                navController.navigate("home/vehicle_screen/" +
-                                                                        "${Uri.encode(linha.origem ?: "-")}/" +
-                                                                        "${Uri.encode(linha.destino ?: "-")}/" +
-                                                                        "${Uri.encode(linha.letreiroCompleto ?: "-")}/" +
-                                                                        "${Uri.encode(linha.sentidoLinha.toString())}/" +
-                                                                        "${veiculo.latitude ?: 0.0}/" +
-                                                                        "${veiculo.longitude ?: 0.0}"
+                                                                navController.navigate(
+                                                                    "home/vehicle_screen/" +
+                                                                            "${Uri.encode(linha.origem ?: "-")}/" +
+                                                                            "${Uri.encode(linha.destino ?: "-")}/" +
+                                                                            "${Uri.encode(linha.letreiroCompleto ?: "-")}/" +
+                                                                            "${Uri.encode(linha.sentidoLinha.toString())}/" +
+                                                                            "${veiculo.latitude ?: 0.0}/" +
+                                                                            "${veiculo.longitude ?: 0.0}"
                                                                 )
-                                                            }
+                                                            },
+                                                        verticalAlignment = Alignment.CenterVertically
                                                     ) {
-                                                        Text(
-                                                            text = "Veículo: ${veiculo.prefixoVeiculo ?: "Desconhecido"}",
-                                                            style = MaterialTheme.typography.bodySmall
-                                                        )
-                                                        Text(
-                                                            text = "Horário Previsto: ${veiculo.horarioPrevisto ?: "Não disponível"}",
-                                                            style = MaterialTheme.typography.bodySmall
-                                                        )
-                                                        Text(
-                                                            text = "Acessível: ${if (veiculo.acessivel == true) "Sim" else "Não"}",
-                                                            style = MaterialTheme.typography.bodySmall
+                                                        Column(
+                                                            modifier = Modifier.weight(1f)
+                                                        ) {
+                                                            Text(
+                                                                text = "Veículo: ${veiculo.prefixoVeiculo ?: "Desconhecido"}",
+                                                                style = MaterialTheme.typography.bodySmall
+                                                            )
+                                                            Text(
+                                                                text = "Horário Previsto: ${veiculo.horarioPrevisto ?: "Não disponível"}",
+                                                                style = MaterialTheme.typography.bodySmall
+                                                            )
+                                                            Text(
+                                                                text = "Acessível: ${if (veiculo.acessivel == true) "Sim" else "Não"}",
+                                                                style = MaterialTheme.typography.bodySmall
+                                                            )
+                                                        }
+
+                                                        Icon(
+                                                            imageVector = Icons.TwoTone.DoubleArrow,
+                                                            contentDescription = "Arrow Forward",
+                                                            modifier = Modifier.padding(start = 8.dp),
+                                                            tint = Color.Gray
                                                         )
                                                     }
                                                 }

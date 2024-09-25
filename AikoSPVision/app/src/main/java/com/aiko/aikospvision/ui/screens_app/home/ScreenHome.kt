@@ -130,8 +130,6 @@ fun ScreenHome(navController: NavController, viewModel: ViewModelHome = getViewM
                             navController,
                             onClickIsOn = true
                         )
-
-
                         if (taskState is TaskState.Loading) {
                             IndeterminateCircularIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
                         } else {
