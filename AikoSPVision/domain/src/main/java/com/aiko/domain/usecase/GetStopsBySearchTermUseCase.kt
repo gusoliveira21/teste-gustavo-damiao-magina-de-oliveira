@@ -6,6 +6,11 @@ import com.aiko.domain.repository.SPVisionRepository
 import com.aiko.domain.usecase.base.BaseUseCase
 import com.aiko.domain.usecase.base.DataResult
 
+/**
+ * Caso de uso responsável por buscar paradas de ônibus com base em um termo de pesquisa.
+ *
+ * @property spVisionRepository Repositório responsável pelas operações de busca de paradas.
+ */
 class GetStopsBySearchTermUseCase(
     private val spVisionRepository: SPVisionRepository
 ) : BaseUseCase<String, List<Parada>>() {
