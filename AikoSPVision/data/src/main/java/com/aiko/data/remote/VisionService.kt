@@ -1,13 +1,14 @@
 package com.aiko.data.remote
 
-import com.aiko.domain.model.Linha
-import com.aiko.domain.model.Parada
-import com.aiko.domain.model.Previsao
+import com.aiko.domain.model.LineModel
+import com.aiko.domain.model.StopModel
+import com.aiko.domain.model.ForecastModel
 import com.aiko.domain.network.NetworkResult
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
+const val token_key = "8df2ebbc7fed5723047bf5505576bc6f3986f9f6e43e1efc0b40086fc4e438c1"
 
 /**
  * Interface que define os serviços de rede para o VisionService.
@@ -30,7 +31,7 @@ interface VisionService {
      * @return [NetworkResult] contendo a lista de paradas encontradas.
      */
     @GET("Parada/Buscar")
-    suspend fun getStopsBySearchTerm(@Query("termosBusca") searchTerm: String): NetworkResult<List<Parada>>
+    suspend fun getStopsBySearchTerm(@Query("termosBusca") searchTerm: String): NetworkResult<List<StopModel>>
 
     /**
      * Obtém previsões de chegada de ônibus para uma parada específica.
@@ -39,7 +40,7 @@ interface VisionService {
      * @return [NetworkResult] contendo as previsões para a parada.
      */
     @GET("Previsao/Parada")
-    suspend fun getForecast(@Query("codigoParada") stopCode: Long): NetworkResult<Previsao>
+    suspend fun getForecast(@Query("codigoParada") stopCode: Long): NetworkResult<ForecastModel>
 
     /**
      * Busca linhas de ônibus com base em um código ou número identificador.
@@ -48,5 +49,5 @@ interface VisionService {
      * @return [NetworkResult] contendo a lista de linhas encontradas.
      */
     @GET("Linha/Buscar")
-    suspend fun getLinesBySearchTerm(@Query("termosBusca") lineCode: Long): NetworkResult<List<Linha>>
+    suspend fun getLinesBySearchTerm(@Query("termosBusca") lineCode: Long): NetworkResult<List<LineModel>>
 }

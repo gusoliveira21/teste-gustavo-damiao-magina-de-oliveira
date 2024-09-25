@@ -1,9 +1,8 @@
 package com.aiko.domain.repository
 
-import com.aiko.domain.model.Linha
-import com.aiko.domain.model.Parada
-import com.aiko.domain.model.PosicaoVeiculo
-import com.aiko.domain.model.Previsao
+import com.aiko.domain.model.LineModel
+import com.aiko.domain.model.StopModel
+import com.aiko.domain.model.ForecastModel
 import com.aiko.domain.network.NetworkResult
 
 /**
@@ -24,7 +23,7 @@ interface SPVisionRepository {
      * @param term Termo de busca a ser utilizado para encontrar as paradas.
      * @return [NetworkResult] contendo a lista de paradas.
      */
-    suspend fun getStopsBySearchTerm(term: String): NetworkResult<List<Parada>>
+    suspend fun getStopsBySearchTerm(term: String): NetworkResult<List<StopModel>>
 
     /**
      * Obtém previsões de chegada de ônibus em uma parada específica.
@@ -32,7 +31,7 @@ interface SPVisionRepository {
      * @param stopCode Código identificador da parada.
      * @return [NetworkResult] contendo as previsões para a parada.
      */
-    suspend fun getForecast(stopCode: Long): NetworkResult<Previsao>
+    suspend fun getForecast(stopCode: Long): NetworkResult<ForecastModel>
 
     /**
      * Busca informações de linhas de ônibus com base em um termo de pesquisa.
@@ -40,5 +39,5 @@ interface SPVisionRepository {
      * @param term Código ou número identificador da linha.
      * @return [NetworkResult] contendo a lista de linhas encontradas.
      */
-    suspend fun getLineBySearchTerm(term: Long): NetworkResult<List<Linha>>
+    suspend fun getLineBySearchTerm(term: Long): NetworkResult<List<LineModel>>
 }
