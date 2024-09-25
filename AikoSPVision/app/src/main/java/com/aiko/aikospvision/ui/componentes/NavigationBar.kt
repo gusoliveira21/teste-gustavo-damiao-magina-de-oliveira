@@ -25,7 +25,6 @@ fun NavigationBar(navController: NavController) {
     val context = LocalContext.current
     val items = listOf(
         NavigationBarItems.Home,
-        NavigationBarItems.Stop,
         NavigationBarItems.Line,
     )
 

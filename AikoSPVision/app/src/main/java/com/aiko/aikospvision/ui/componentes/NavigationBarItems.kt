@@ -21,12 +21,6 @@ sealed class NavigationBarItems(
         groupResId = R.string.navigation_group_home
     )
 
-    object Stop : NavigationBarItems(
-        icons = R.drawable.pin,
-        titleResId = R.string.navigation_title_stops,
-        routeResId = R.string.navigation_route_stops,
-        groupResId = R.string.navigation_group_stops
-    )
 
     object Line : NavigationBarItems(
         icons = R.drawable.bus,
