@@ -23,12 +23,13 @@ suspend fun <T : Any> NetworkResult<T>.onSuccess(
  *   CallBack to handle with Error
  */
 suspend fun <T : Any> NetworkResult<T>.onError(
-    executable: suspend (code: Int, body: ErrorBody?) -> Unit
+    executable: suspend () -> Unit
 ): NetworkResult<T> = apply {
     if (this is NetworkResult.Error<T>) {
-        executable(code, body)
+        executable()
     }
 }
+
 
 /**
  *   CallBack to handle with Exception
