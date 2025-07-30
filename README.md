@@ -1,7 +1,5 @@
 # Teste Android
 
-![Aiko](imagens/aiko.png)
-
 Neste teste serão avaliados seus conhecimentos e a metodologia aplicada no desenvolvimento de aplicações mobile Android.
 
 ## O Desafio
